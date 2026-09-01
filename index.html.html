@@ -1,0 +1,307 @@
+<!indext.html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Assessment XII - Renewable Energy | SMAN 22 Bandung</title>
+<style>
+:root{--primary:#0b5d4b;--secondary:#eaf6f1;--accent:#f0a500;--danger:#b42318;--ink:#17211f;--muted:#64706c;--card:#fff;--line:#dbe5e1}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7f6;color:var(--ink)}
+header{background:linear-gradient(135deg,#0b5d4b,#083d33);color:#fff;padding:22px 18px;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px #0002}
+.header-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;gap:15px;align-items:center}
+h1{font-size:22px;margin:0 0 5px}.sub{opacity:.9;font-size:13px}
+.timer{font-size:23px;font-weight:700;background:#ffffff1c;border:1px solid #ffffff55;padding:10px 15px;border-radius:10px;white-space:nowrap}
+main{max-width:1100px;margin:22px auto;padding:0 15px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 3px 12px #0000000a}
+.login{max-width:650px;margin:35px auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-weight:700;font-size:14px;display:block;margin-bottom:7px}input,select{width:100%;padding:12px;border:1px solid #bfcfc9;border-radius:9px;font-size:15px}
+button{border:0;border-radius:9px;padding:12px 17px;font-weight:700;cursor:pointer}.primary{background:var(--primary);color:white}.secondary{background:#e9efed;color:var(--ink)}.danger{background:var(--danger);color:white}
+button:disabled{opacity:.5;cursor:not-allowed}.note{background:#fff8e7;border-left:4px solid var(--accent);padding:12px;border-radius:8px;font-size:13px}
+.error{color:var(--danger);font-weight:700;margin-top:10px}.hidden{display:none!important}
+.instructions li{margin:8px 0}.text-box{background:#f7faf9;border-left:5px solid var(--primary);padding:18px;border-radius:8px;line-height:1.65;margin-bottom:20px}
+.question{border:1px solid var(--line);border-radius:12px;padding:17px;margin:15px 0}.qhead{font-weight:700;margin-bottom:12px}.difficulty{font-size:11px;color:var(--muted);float:right}
+.option{display:block;padding:9px 10px;margin:6px 0;border-radius:7px}.option:hover{background:#f1f6f4}.option input{width:auto;margin-right:8px}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:var(--secondary);color:var(--primary);font-size:12px;font-weight:700}
+.progress{height:8px;background:#dfe9e5;border-radius:20px;overflow:hidden;margin:10px 0}.bar{height:100%;background:var(--primary);width:0}
+.sticky-actions{position:sticky;bottom:10px;background:#ffffffef;padding:12px;border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(6px);display:flex;justify-content:space-between;align-items:center;gap:10px}
+#violationOverlay{position:fixed;inset:0;background:#160000eF;color:#fff;z-index:100;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
+.modal{max-width:520px;background:#fff;color:var(--ink);border-radius:14px;padding:25px}.modal h2{color:var(--danger)}
+.result{max-width:700px;margin:40px auto;text-align:center}.score{font-size:64px;color:var(--primary);font-weight:800}
+.small{font-size:12px;color:var(--muted)}footer{text-align:center;padding:30px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.header-inner{align-items:flex-start}.timer{font-size:18px;padding:8px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="header-inner">
+  <div><h1>English Assessment — Renewable Energy</h1><div class="sub">Class XII • SMAN 22 Bandung • 30 HOTS Questions</div></div>
+  <div id="timer" class="timer">60:00</div>
+ </div>
+</header>
+
+<main>
+<section id="loginCard" class="card login">
+ <h2>Student Verification</h2>
+ <p>Enter your identity and the <b>question code</b> assigned to your class before starting.</p>
+ <div class="grid">
+  <div><label for="studentName">Full Name</label><input id="studentName" autocomplete="off"></div>
+  <div><label for="studentClass">Class</label>
+   <select id="studentClass">
+    <option value="">-- Select Class --</option>
+    <option>XII 1</option><option>XII 2</option><option>XII 3</option><option>XII 4</option>
+    <option>XII 5</option><option>XII 6</option><option>XII 7</option><option>XII 8</option>
+    <option>XII 9</option><option>XII 10</option><option>XII 11</option><option>XII 12</option>
+   </select>
+  </div>
+ </div>
+ <div style="margin-top:14px"><label for="questionCode">Question Code</label><input id="questionCode" placeholder="Example: Bg226XII1" autocomplete="off"></div>
+ <div class="note" style="margin-top:14px">
+  <b>Exam rules:</b> 60 minutes. The exam runs in fullscreen. Switching tabs/windows, minimizing, or leaving the exam window is recorded as a violation. After 3 violations the exam is locked and can only be reopened by the teacher using the teacher code.
+ </div>
+ <button class="primary" id="startBtn" style="margin-top:16px">Start Exam</button>
+ <div id="loginError" class="error"></div>
+</section>
+
+<section id="examSection" class="hidden">
+ <div class="card">
+  <span class="badge" id="studentBadge"></span>
+  <div class="progress"><div id="progressBar" class="bar"></div></div>
+  <div class="small">Answer all 30 questions. Questions are not shown with explanations after submission.</div>
+ </div>
+
+ <div id="questions"></div>
+
+ <div class="sticky-actions">
+   <div><b id="answeredCount">0</b>/30 answered</div>
+   <button class="primary" id="submitBtn">Submit Exam</button>
+ </div>
+</section>
+
+<section id="resultSection" class="card result hidden">
+ <h2>Assessment Completed</h2>
+ <div class="score" id="finalScore">0</div>
+ <p id="resultText"></p>
+ <p class="small">Your score has been sent to the school spreadsheet.</p>
+</section>
+</main>
+
+<div id="violationOverlay" class="hidden">
+ <div class="modal">
+  <h2>Exam Locked</h2>
+  <p id="violationMessage"></p>
+  <input id="teacherCode" placeholder="Teacher unlock code" autocomplete="off">
+  <button class="primary" id="unlockBtn" style="margin-top:12px">Unlock Exam</button>
+  <div id="unlockError" class="error"></div>
+ </div>
+</div>
+
+<footer>SMAN 22 Bandung • English Assessment • Renewable Energy</footer>
+
+<script>
+/* =========================
+   CONFIGURATION
+   ========================= */
+const GOOGLE_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzewAPqH_qHT1Qy7LuKSOOsIe7hvOEg2hwtEwhBCfu3VKUB_ORzHQ4OMdvboyqzjPv1/exec"
+const TEACHER_UNLOCK_CODE = "guru 22 hebat";
+const EXAM_MINUTES = 60;
+const MAX_VIOLATIONS = 3;
+
+const CLASS_CODES = {};
+for(let i=1;i<=12;i++) CLASS_CODES["XII "+i] = "Bg226XII"+i;
+
+/* =========================
+   QUESTION BANK
+   3 texts x 10 questions.
+   Difficulty: 5 easy, 15 medium, 10 hard.
+   Types: single=10, multiple=10, classification=10.
+   ========================= */
+const questions = [
+/* TEXT 1 */
+{type:"single",difficulty:"easy",text:1,q:"A coastal community has strong sunlight but also experiences frequent cloudy days. Which plan best uses the evidence in the text?",opts:["Rely only on solar panels and ignore cloudy days.","Combine solar generation with battery storage and another flexible source.","Avoid renewable energy because clouds reduce output.","Build only wind turbines even when local wind data is limited."],a:[1]},
+{type:"single",difficulty:"easy",text:1,q:"Why does the author present battery storage as important rather than treating it as a replacement for renewable generation?",opts:["Storage creates sunlight.","Storage shifts electricity from times of high production to times of need.","Storage eliminates all maintenance.","Storage makes electricity demand disappear."],a:[1]},
+{type:"single",difficulty:"easy",text:1,q:"Which statement is the best inference about a school installing rooftop solar?",opts:["It will automatically become energy independent.","Its benefits depend partly on demand patterns, system size, and local conditions.","It will never need the grid again.","Its electricity production will be identical every hour."],a:[1]},
+{type:"multiple",difficulty:"medium",text:1,q:"Which TWO actions would make the community's solar project more resilient?",opts:["Add battery storage sized to the demand profile.","Use monitoring data to adjust energy use.","Assume every day has the same solar output.","Disconnect from every backup source immediately."],a:[0,1]},
+{type:"multiple",difficulty:"medium",text:1,q:"Which TWO claims are supported by the text's reasoning?",opts:["Renewable systems should be planned around local conditions.","Energy storage can help manage variable generation.","Solar panels produce maximum electricity at midnight.","Cloudy weather makes all renewable systems useless."],a:[0,1]},
+{type:"multiple",difficulty:"medium",text:1,q:"A school wants to reduce its evening grid consumption. Which TWO strategies are most logically connected to the text?",opts:["Store some daytime solar electricity for evening use.","Shift flexible activities toward periods of solar production.","Increase electricity use when solar production is lowest.","Remove all energy monitoring."],a:[0,1]},
+{type:"classification",difficulty:"medium",text:1,q:"Classify the statement: “The community should use batteries because solar output changes during the day.”",opts:["Evidence from the text","Reasoned recommendation based on evidence","Unrelated claim","Historical fact"],a:[1]},
+{type:"classification",difficulty:"medium",text:1,q:"Classify the statement: “Clouds can reduce solar generation.”",opts:["Observation/factual information","Personal preference","Policy recommendation","Unrelated prediction"],a:[0]},
+{type:"classification",difficulty:"hard",text:1,q:"Classify the argument: “Because one cloudy week lowered solar output, the community should abandon solar power permanently.”",opts:["Well-supported conclusion","Overgeneralization","Direct measurement","Balanced comparison"],a:[1]},
+{type:"classification",difficulty:"hard",text:1,q:"Classify the best decision for the community: “Install solar after studying demand, sunlight, storage needs, and backup options.”",opts:["Evidence-based planning","Technology rejection","Unverified assumption","Single-factor decision"],a:[0]},
+
+/* TEXT 2 */
+{type:"single",difficulty:"easy",text:2,q:"What is the central challenge discussed in the text about wind energy?",opts:["Wind turbines can only operate in cities.","Wind output varies and therefore needs to be considered with demand and grid conditions.","Wind turbines produce electricity only during storms.","Wind energy cannot be measured."],a:[1]},
+{type:"single",difficulty:"easy",text:2,q:"Why can geographical diversity improve a wind-energy system?",opts:["Wind is always identical everywhere.","Different sites may experience stronger winds at different times, reducing dependence on one location.","It prevents turbines from needing maintenance.","It makes electricity demand constant."],a:[1]},
+{type:"single",difficulty:"medium",text:2,q:"A region has excellent wind resources far from major cities. Which factor should planners examine before expanding the project?",opts:["The color of the turbines.","Transmission capacity and distance to demand centers.","Whether all residents like the same design.","Whether wind exists only in winter."],a:[1]},
+{type:"multiple",difficulty:"medium",text:2,q:"Which TWO approaches could help manage variable wind generation?",opts:["Combine generation from geographically diverse sites.","Improve forecasting and grid flexibility.","Assume wind output is constant.","Ignore transmission constraints."],a:[0,1]},
+{type:"multiple",difficulty:"medium",text:2,q:"Which TWO statements best reflect systems thinking in the text?",opts:["Generation must be considered together with transmission.","Forecasting can improve operational decisions.","Only turbine size matters.","Location has no effect on the value of electricity."],a:[0,1]},
+{type:"multiple",difficulty:"medium",text:2,q:"A planner compares two wind projects. Which TWO questions are most useful?",opts:["How does each project's output match regional demand?","What transmission upgrades would each project require?","Which project has the tallest logo?","Which project has the most identical weather every day?"],a:[0,1]},
+{type:"classification",difficulty:"medium",text:2,q:"Classify: “A wind farm far from cities may require transmission investment.”",opts:["Systems-level implication","Personal opinion","Irrelevant detail","Chemical process"],a:[0]},
+{type:"classification",difficulty:"medium",text:2,q:"Classify: “Wind forecasting can help grid operators anticipate changes in generation.”",opts:["Operational strategy","Unrelated criticism","Historical event","Moral judgment"],a:[0]},
+{type:"classification",difficulty:"hard",text:2,q:"Classify the reasoning: “This site has the strongest average wind, so it must be the best project regardless of transmission costs.”",opts:["Multi-factor analysis","Single-factor reasoning","Causal proof","Risk-adjusted planning"],a:[1]},
+{type:"classification",difficulty:"hard",text:2,q:"Classify the strongest conclusion: “The best wind project is not necessarily the one with the highest wind speed; grid access, demand, forecasting, and environmental effects also matter.”",opts:["Systems-based conclusion","Unsupported slogan","Contradiction of all evidence","Purely economic claim"],a:[0]},
+
+/* TEXT 3 */
+{type:"single",difficulty:"medium",text:3,q:"According to the text, why is energy efficiency often described as a partner to renewable energy?",opts:["Efficiency increases energy waste.","Reducing demand can make it easier for renewable supply to meet a larger share of total needs.","Efficiency prevents renewable technologies from being used.","Efficiency means electricity is no longer necessary."],a:[1]},
+{type:"single",difficulty:"medium",text:3,q:"A school replaces old lighting with efficient LEDs and then installs solar panels. What is the most defensible reasoning?",opts:["Lower demand may allow the solar system to cover a greater proportion of consumption.","LEDs generate solar electricity.","Solar panels become unnecessary.","The school will have identical demand every day."],a:[0]},
+{type:"single",difficulty:"medium",text:3,q:"Which evidence would best test whether an energy-efficiency program actually worked?",opts:["A photo of the new lights.","Measured electricity consumption before and after, adjusted for relevant changes.","The brand name of the lamps.","The number of posters displayed at school."],a:[1]},
+{type:"multiple",difficulty:"medium",text:3,q:"Which TWO measures could reduce the school's energy demand?",opts:["Efficient lighting and appliances.","Behavioral changes supported by energy monitoring.","Leaving equipment on continuously.","Increasing cooling demand unnecessarily."],a:[0,1]},
+{type:"multiple",difficulty:"medium",text:3,q:"Which TWO pieces of evidence would strengthen a claim that the combined solar-efficiency program is effective?",opts:["Long-term electricity-use data compared with a suitable baseline.","Solar production data matched with changes in grid electricity use.","A single student's impression after one day.","A poster claiming the program is successful."],a:[0,1]},
+{type:"multiple",difficulty:"hard",text:3,q:"Which TWO considerations are important when evaluating the program fairly?",opts:["Account for changes in occupancy or school schedules.","Compare performance with an appropriate baseline period.","Assume all reductions came from solar panels.","Ignore weather and operational changes."],a:[0,1]},
+{type:"classification",difficulty:"hard",text:3,q:"Classify: “Electricity consumption fell 18% after the efficiency program, while school occupancy remained similar.”",opts:["Relevant evidence","Pure opinion","Unrelated anecdote","Future prediction"],a:[0]},
+{type:"classification",difficulty:"hard",text:3,q:"Classify: “Because the program feels successful, no data collection is needed.”",opts:["Evidence-based evaluation","Unsupported conclusion","Controlled measurement","Comparative analysis"],a:[1]},
+{type:"classification",difficulty:"hard",text:3,q:"Classify the proposed evaluation: “Compare electricity use across similar months before and after the intervention and examine occupancy and weather.”",opts:["Rigorous evaluation approach","Random guess","Single-variable assumption","Marketing claim"],a:[0]},
+{type:"classification",difficulty:"hard",text:3,q:"Classify the overall principle: “Renewable generation and energy efficiency can reinforce each other when decisions are based on measured demand and system performance.”",opts:["Systems-thinking principle","Irrelevant detail","Unsupported superstition","Definition of fossil fuel"],a:[0]}
+];
+
+const texts = {
+1:{title:"TEXT 1 — Solar Power and Community Resilience",body:`A coastal community is considering a solar-energy project. The area receives strong sunlight for much of the year, but cloud cover can reduce solar output on some days. Local planners therefore examine not only the amount of sunlight but also when households and public facilities use electricity. They consider batteries so that part of the electricity produced during high-sun periods can be used later. They also discuss flexible demand and backup options. The planners argue that a renewable-energy project should be designed around local conditions rather than around a single attractive technology.`},
+2:{title:"TEXT 2 — Wind Energy and the Grid",body:`A regional government is studying several wind-farm locations. One location has excellent average wind speeds but is far from major electricity-demand centers. Another has slightly lower wind speeds but is closer to existing transmission infrastructure. Engineers explain that the value of a wind project depends on more than the turbine's output: transmission capacity, electricity demand, forecasting, environmental effects, and the diversity of generation sites can all matter. If wind farms are spread across different areas, changes in wind at one site may be partly offset by conditions at another site. Better forecasting and a flexible grid can also help operators respond to variable generation.`},
+3:{title:"TEXT 3 — Efficiency as a Partner to Renewable Energy",body:`A school wants to reduce its dependence on grid electricity. Before installing a large solar system, the school replaces inefficient lighting and appliances, introduces energy monitoring, and encourages staff to switch off equipment when it is not needed. The aim is not simply to make the school use less electricity, but to understand its demand pattern. After the efficiency measures, the school can evaluate how much solar generation is needed. To judge the program fairly, the school compares electricity use with a suitable baseline and considers changes in occupancy, schedules, and weather. The project team concludes that renewable generation and efficiency can reinforce each other when decisions are based on measured performance.`}
+};
+
+let student = {name:"", className:"", code:"", start:null, violations:0, locked:false, answers:{}};
+let timerInterval = null;
+let examSubmitted = false;
+
+function norm(s){return String(s||"").replace(/\\s+/g,"").toUpperCase();}
+function codeFor(cls){return CLASS_CODES[cls]||"";}
+
+function startExam(){
+ const name=document.getElementById("studentName").value.trim();
+ const cls=document.getElementById("studentClass").value;
+ const code=document.getElementById("questionCode").value.trim();
+ const err=document.getElementById("loginError");
+ err.textContent="";
+ if(!name||!cls||!code){err.textContent="Please complete all fields.";return;}
+ if(norm(code)!==norm(codeFor(cls))){err.textContent="Invalid question code for the selected class.";return;}
+ student={name,className:cls,code:code,start:Date.now(),violations:0,locked:false,answers:{}};
+ document.getElementById("loginCard").classList.add("hidden");
+ document.getElementById("examSection").classList.remove("hidden");
+ document.getElementById("studentBadge").textContent=name+" • "+cls;
+ renderQuestions();
+ requestFullscreen();
+ timerInterval=setInterval(updateTimer,1000);
+ updateTimer();
+ document.addEventListener("visibilitychange",handleVisibility);
+ window.addEventListener("blur",handleBlur);
+ window.addEventListener("beforeunload",handleBeforeUnload);
+}
+
+function renderQuestions(){
+ const root=document.getElementById("questions"); root.innerHTML="";
+ let lastText=0;
+ questions.forEach((x,i)=>{
+   if(x.text!==lastText){
+     const t=texts[x.text];
+     root.insertAdjacentHTML("beforeend",`<div class="card"><h2>${t.title}</h2><div class="text-box">${t.body}</div></div>`);
+     lastText=x.text;
+   }
+   const multi=x.type==="multiple";
+   const inputType=multi?"checkbox":"radio";
+   const letters=["A","B","C","D"];
+   let opts=x.opts.map((o,j)=>`<label class="option"><input type="${inputType}" name="q${i}" value="${j}" onchange="saveAnswer(${i})"> <b>${letters[j]}.</b> ${o}</label>`).join("");
+   root.insertAdjacentHTML("beforeend",`<div class="question" id="qbox${i}"><div class="qhead">Question ${i+1}<span class="difficulty">${x.difficulty.toUpperCase()}</span></div><div>${x.q}</div>${opts}</div>`);
+ });
+}
+
+function saveAnswer(i){
+ if(examSubmitted)return;
+ const els=[...document.querySelectorAll(`input[name="q${i}"]:checked`)];
+ student.answers[i]=els.map(e=>Number(e.value));
+ updateProgress();
+}
+function updateProgress(){
+ const n=Object.values(student.answers).filter(a=>a&&a.length).length;
+ document.getElementById("answeredCount").textContent=n;
+ document.getElementById("progressBar").style.width=(n/questions.length*100)+"%";
+}
+
+function updateTimer(){
+ if(examSubmitted)return;
+ const left=Math.max(0, EXAM_MINUTES*60-Math.floor((Date.now()-student.start)/1000));
+ const m=Math.floor(left/60),s=left%60;
+ document.getElementById("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ if(left<=0){clearInterval(timerInterval);submitExam(true);}
+}
+
+function requestFullscreen(){
+ const el=document.documentElement;
+ if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+}
+function handleVisibility(){if(document.hidden) registerViolation("The exam tab/window became inactive.");}
+function handleBlur(){registerViolation("The exam window lost focus.");}
+function handleBeforeUnload(e){if(!examSubmitted){e.preventDefault();e.returnValue="";}}
+
+function registerViolation(reason){
+ if(examSubmitted || student.locked)return;
+ student.violations++;
+ if(student.violations>=MAX_VIOLATIONS){
+   student.locked=true;
+   document.getElementById("violationMessage").textContent="The maximum of 3 violations has been reached. A teacher must enter the unlock code to reopen the exam.";
+   document.getElementById("violationOverlay").classList.remove("hidden");
+ }else{
+   document.getElementById("violationMessage").textContent=reason+" Violation "+student.violations+" of "+MAX_VIOLATIONS+". Return to the exam. The next violation will be recorded.";
+   document.getElementById("violationOverlay").classList.remove("hidden");
+ }
+}
+
+document.getElementById("unlockBtn").addEventListener("click",()=>{
+ const c=document.getElementById("teacherCode").value.trim().toLowerCase();
+ if(c===TEACHER_UNLOCK_CODE){
+   student.locked=false;
+   document.getElementById("teacherCode").value="";
+   document.getElementById("unlockError").textContent="";
+   document.getElementById("violationOverlay").classList.add("hidden");
+   requestFullscreen();
+ }else document.getElementById("unlockError").textContent="Incorrect teacher unlock code.";
+});
+
+async function submitExam(auto=false){
+ if(examSubmitted)return;
+ if(!auto && !confirm("Submit your answers now? You will not be able to edit them."))return;
+ examSubmitted=true; clearInterval(timerInterval);
+ window.removeEventListener("blur",handleBlur);document.removeEventListener("visibilitychange",handleVisibility);
+ const result=calculateScore();
+ await sendResult(result,auto);
+ document.getElementById("examSection").classList.add("hidden");
+ document.getElementById("resultSection").classList.remove("hidden");
+ document.getElementById("finalScore").textContent=result.score;
+ document.getElementById("resultText").textContent="Exam submitted successfully. No answer explanations are displayed.";
+ try{if(document.fullscreenElement) await document.exitFullscreen();}catch(e){}
+}
+
+function sameSet(a,b){return a.length===b.length && a.slice().sort((x,y)=>x-y).every((v,i)=>v===b.slice().sort((x,y)=>x-y)[i]);}
+function calculateScore(){
+ let points=0;
+ questions.forEach((x,i)=>{
+   const got=student.answers[i]||[];
+   if(sameSet(got,x.a)) points++;
+ });
+ return {score:Math.round(points/questions.length*100),correct:points,total:questions.length};
+}
+
+async function sendResult(result,auto){
+ const payload={
+   action:"submitExam",
+   timestamp:new Date().toISOString(),
+   studentName:student.name,
+   className:student.className,
+   questionCode:student.code,
+   score:result.score,
+   correct:result.correct,
+   total:result.total,
+   violations:student.violations,
+   autoSubmitted:auto,
+   durationSeconds:Math.min(EXAM_MINUTES*60,Math.floor((Date.now()-student.start)/1000)),
+   userAgent:navigator.userAgent
+ };
+ try{
+   await fetch(GOOGLE_APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+ }catch(e){console.error("Submission error",e);}
+}
+
+document.getElementById("startBtn").addEventListener("click",startExam);
+document.getElementById("submitBtn").addEventListener("click",()=>submitExam(false));
+</script>
+</body>
+</html>
